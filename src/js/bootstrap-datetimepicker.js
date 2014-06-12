@@ -399,7 +399,7 @@ THE SOFTWARE.
                 if (prevMonth.isSame(pMoment({ y: picker.date.year(), M: picker.date.month(), d: picker.date.date() }))) {
                     clsName += ' active';
                 }
-                if (isInDisableDates(prevMonth) || !isInEnableDates(prevMonth)) {
+                if (isInDisableDates(prevMonth, 'day') || !isInEnableDates(prevMonth, 'day')) {
                     clsName += ' disabled';
                 }
                 if (picker.options.showToday === true) {
@@ -869,9 +869,9 @@ THE SOFTWARE.
 		    picker.unset = false;
 		},
 
-        isInDisableDates = function (date) {
+        isInDisableDates = function (date, unit) {
             pMoment.lang(picker.options.language);
-            if (date.isAfter(picker.options.maxDate) || date.isBefore(picker.options.minDate)) return true;
+              if (date.isAfter(picker.options.maxDate, unit) || date.isBefore(picker.options.minDate, unit)) return true;
             if (picker.options.disabledDates === false) {
                 return false;
             }

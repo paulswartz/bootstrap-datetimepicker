@@ -846,16 +846,14 @@ THE SOFTWARE.
 
 		checkDate = function (direction, unit, amount) {
 		    pMoment.lang(picker.options.language);
-		    var newDate;
+		    var newDate = pMoment(picker.date);
 		    if (direction == "add") {
-		        newDate = pMoment(picker.date);
-		        if (newDate.hours() == 23) newDate.add(amount, unit);
 		        newDate.add(amount, unit);
 		    }
 		    else {
 		        newDate = pMoment(picker.date).subtract(amount, unit);
 		    }
-		    if (isInDisableDates(pMoment(newDate.subtract(amount, unit))) || isInDisableDates(newDate)) {
+		    if (isInDisableDates(newDate)) {
 		        notifyError(newDate.format(picker.format));
 		        return;
 		    }

@@ -613,12 +613,15 @@
                            h: picker.date.hours(),
                            m: picker.date.minutes(),
                            s: picker.date.seconds()
+                         });
+                         if (picker.options.minDate && picker.date.isBefore(picker.options.minDate)) {
+                           picker.date = pMoment(picker.options.minDate);
                          }
-                                              );
                          picker.viewDate = pMoment({
-                           y: year, M: month, d: Math.min(28, day)
+                           y: picker.date.year(), M: picker.date.month(), d: Math.min(28, picker.date.day())
                          });
                          fillDate();
+                         fillTime();
                          set();
                          notifyChange(oldDate, e.type);
                        }
@@ -657,6 +660,11 @@
 		   var hour = picker.date.hours();
 		   if (hour >= 12) hour -= 12;
 		   else hour += 12;
+                   var newDate = pMoment(picker.date).hours(hour);
+                   if (isInDisableDates(newDate)) {
+                     notifyError(newDate.format(picker.format));
+                     return;
+                   }
 		   picker.date.hours(hour);
 		 },
 
@@ -851,7 +859,7 @@
 		   newDate.add(amount, unit);
 		 }
 		 else {
-		   newDate = pMoment(picker.date).subtract(amount, unit);
+		   newDate.subtract(amount, unit);
 		 }
 		 if (isInDisableDates(newDate)) {
 		   notifyError(newDate.format(picker.format));

@@ -617,6 +617,9 @@
                          if (picker.options.minDate && picker.date.isBefore(picker.options.minDate)) {
                            picker.date = pMoment(picker.options.minDate);
                          }
+                         if (picker.options.maxDate && picker.date.isAfter(picker.options.maxDate)) {
+                           picker.date = pMoment(picker.options.maxDate);
+                         }
                          picker.viewDate = pMoment({
                            y: picker.date.year(), M: picker.date.month(), d: Math.min(28, picker.date.day())
                          });
